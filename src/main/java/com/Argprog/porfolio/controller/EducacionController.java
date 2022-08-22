@@ -4,6 +4,7 @@ import com.Argprog.porfolio.models.Educacion;
 import com.Argprog.porfolio.service.IEducacionService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,22 +23,24 @@ public class EducacionController {
 	@Autowired
 	private IEducacionService educacionService;
 	
-	@PostMapping("/nuevo/educacion")
-	public void agregarEducacion (@RequestBody Educacion educacion){
-		educacionService.crearEducacion(educacion);
-	}		
-
-	@GetMapping("/ver/educacion")
+	@GetMapping("/ver")
 	@ResponseBody 
-	public List<Educacion> verEducacion (){
+	public List<Educacion> verEducacion(){
 		return educacionService.verEducacion();
 	}
+	@PreAuthorize("hasRole('ADMIN')")
+	@PostMapping("/nuevo")
+	public void agregarEducacion(@RequestBody Educacion educacion){
+		educacionService.crearEducacion(educacion);
+	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/borrar/{id}")
-	public void eliminarUsuario (@PathVariable Long id) {
+	public void eliminarUsuario(@PathVariable Long id) {
 		educacionService.eliminarEducacion(id);	
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/editar/{id}")
 	public Educacion editarEducacion(@PathVariable Long id,
                                 @RequestParam("institucion") String nuevaInstitucion,

@@ -4,6 +4,7 @@ import com.Argprog.porfolio.models.Experiencia;
 import com.Argprog.porfolio.service.IExperienciaService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,24 +21,27 @@ import org.springframework.web.bind.annotation.RestController;
 public class ExperienciaController {
 	
 	@Autowired
-	private IExperienciaService experienciaService;
-	
-	@PostMapping("/nuevo/experiencia")
-	public void agregarExperiencia (@RequestBody Experiencia experiencia){
-		experienciaService.crearExperiencia(experiencia);
-	}		
+	private IExperienciaService experienciaService;		
 
-	@GetMapping("/ver/experiencia")
+	@GetMapping("/ver")
 	@ResponseBody 
-	public List<Experiencia> verExperiencia (){
+	public List<Experiencia> verExperiencia(){
 		return experienciaService.verExperiencia();
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
+	@PostMapping("/nuevo")
+	public void agregarExperiencia(@RequestBody Experiencia experiencia){
+		experienciaService.crearExperiencia(experiencia);
+	}
+	
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/borrar/{id}")
-	public void eliminarExperiencia (@PathVariable Long id) {
+	public void eliminarExperiencia(@PathVariable Long id) {
 		experienciaService.eliminarExperiencia(id);
 	} 
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/editar/{id}")
 	public Experiencia editarExperiencia(@PathVariable Long id,
                                 @RequestParam("empresa") String nuevaEmpresa,

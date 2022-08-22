@@ -4,6 +4,7 @@ import com.Argprog.porfolio.models.Proyecto;
 import com.Argprog.porfolio.service.IProyectoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,22 +23,25 @@ public class ProyectoController {
 	@Autowired
 	private IProyectoService proyectoService;
 	
-	@PostMapping("/nuevo/proyecto")
-	public void agregarProyecto (@RequestBody Proyecto proyecto){
-		proyectoService.crearProyecto(proyecto);
-	}		
-
-	@GetMapping("/ver/proyecto")
+	@GetMapping("/ver")
 	@ResponseBody 
-	public List<Proyecto> verProyecto (){
+	public List<Proyecto> verProyecto(){
 		return proyectoService.verProyecto();
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
+	@PostMapping("/nuevo")
+	public void agregarProyecto(@RequestBody Proyecto proyecto){
+		proyectoService.crearProyecto(proyecto);
+	}
+	
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/borrar/{id}")
-	public void eliminarProyecto (@PathVariable Long id) {
+	public void eliminarProyecto(@PathVariable Long id) {
 		proyectoService.eliminarProyecto(id);
 	} 
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/editar/{id}")
 	public Proyecto editarProyecto(@PathVariable Long id,
                                 @RequestParam("nombreProyecto") String nuevaNombreProyecto,
@@ -51,7 +55,6 @@ public class ProyectoController {
 	proyecto.setUrl(nuevaUrl);
 	proyecto.setFotoProyecto(nuevaFotoProyecto);
 		
-        
 	proyectoService.crearProyecto(proyecto);
         return proyecto;
     }	

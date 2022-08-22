@@ -2,10 +2,13 @@ package com.Argprog.porfolio.models;
 
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 
@@ -21,6 +24,16 @@ public class Persona implements Serializable{
 	private String acercaMi;
 	private String urlFoto;
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "idEdu")
+	private List<Educacion> educacionList;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "idExp")
+	private List<Experiencia> experienciaList;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "idProy")
+	private List<Proyecto> proyectoList;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "idSkill")
+	private List<Skills> SkillsList;
+	
+	 
 	//Constructores 
 	public Persona() {
 	}
