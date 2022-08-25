@@ -57,7 +57,13 @@ public class PersonaController {
 		@RequestParam("apellido") String nuevoApellido,
 		@RequestParam("titulo") String nuevoTitulo,
 		@RequestParam("acercaMi") String nuevoAcercaMi,
-		@RequestParam("urlFoto") String nuevoUrlFoto
+		@RequestParam("urlFoto") String nuevoUrlFoto,
+		@RequestParam("likedinUrl") String nuevaLikedinUrl,
+		@RequestParam("githubUrl") String nuevaGithubUrl,
+		@RequestParam("facebookUrl") String nuevaFacebookUrl ,
+		@RequestParam("instagramUrl") String nuevaInstagramUrl,
+		@RequestParam("imgBanner") String nuevaImgBanner
+		
 	) {
 		Persona persona = personaService.buscarPersona(id);
 
@@ -66,6 +72,11 @@ public class PersonaController {
 		persona.setTitulo(nuevoTitulo);
 		persona.setAcercaMi(nuevoAcercaMi);
 		persona.setUrlFoto(nuevoUrlFoto);
+		persona.setLikedinUrl(nuevaLikedinUrl);
+		persona.setGithubUrl(nuevaGithubUrl);
+		persona.setFacebookUrl(nuevaFacebookUrl);
+		persona.setInstagramUrl(nuevaInstagramUrl);
+		persona.setImgBanner(nuevaImgBanner);
 
 		personaService.crearPersona(persona);
 		return persona;

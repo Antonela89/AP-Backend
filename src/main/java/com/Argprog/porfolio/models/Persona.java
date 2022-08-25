@@ -23,6 +23,11 @@ public class Persona implements Serializable{
 	private String titulo;
 	private String acercaMi;
 	private String urlFoto;
+	private String likedinUrl;
+	private String githubUrl;
+	private String facebookUrl;
+	private String instagramUrl;
+	private String imgBanner;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "idEdu")
 	private List<Educacion> educacionList;
@@ -38,13 +43,18 @@ public class Persona implements Serializable{
 	public Persona() {
 	}
 
-	public Persona(Long id, String nombre, String apellido, String titulo, String acercaMi, String urlFoto) {
+	public Persona(Long id, String nombre, String apellido, String titulo, String acercaMi, String urlFoto, String likedinUrl, String githubUrl, String facebookUrl, String instagramUrl, String imgBanner) {
 		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.titulo = titulo;
 		this.acercaMi = acercaMi;
 		this.urlFoto = urlFoto;
+		this.likedinUrl = likedinUrl;
+		this.githubUrl = githubUrl;
+		this.facebookUrl = facebookUrl;
+		this.instagramUrl = instagramUrl;
+		this.imgBanner = imgBanner;
 	}
 
 	//Getters and Setters
@@ -70,6 +80,46 @@ public class Persona implements Serializable{
 
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
+	}
+
+	public String getLikedinUrl() {
+		return likedinUrl;
+	}
+
+	public void setLikedinUrl(String likedinUrl) {
+		this.likedinUrl = likedinUrl;
+	}
+
+	public String getGithubUrl() {
+		return githubUrl;
+	}
+
+	public void setGithubUrl(String githubUrl) {
+		this.githubUrl = githubUrl;
+	}
+
+	public String getFacebookUrl() {
+		return facebookUrl;
+	}
+
+	public void setFacebookUrl(String facebookUrl) {
+		this.facebookUrl = facebookUrl;
+	}
+
+	public String getInstagramUrl() {
+		return instagramUrl;
+	}
+
+	public void setInstagramUrl(String instagramUrl) {
+		this.instagramUrl = instagramUrl;
+	}
+
+	public String getImgBanner() {
+		return imgBanner;
+	}
+
+	public void setImgBanner(String imgBanner) {
+		this.imgBanner = imgBanner;
 	}
 
 	public String getTitulo() {
